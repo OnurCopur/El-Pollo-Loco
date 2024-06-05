@@ -1,16 +1,12 @@
 let canvas;
-let ctx;
-let character = new Image();
-
-
-
+let world;
 
 
 function init() {
     canvas = document.getElementById('canvas');
+    world = new World(canvas);
+
     ctx = canvas.getContext('2d');
     
-    character.src = 'El Pollo Loco/img/2_character_pepe/2_walk/W-21.png';
-
-    ctx.drawImage(character, 20, 20, 50, 100);
+    console.log('my character is', world['character'])
 }

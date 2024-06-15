@@ -1,9 +1,49 @@
 body {
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('El Pollo Loco/img/background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    font-family: 'zabars', Arial, Helvetica, sans-serif;
 }
 
 canvas {
     background-color: black;
+    margin-top: 50px;
+    display: block;
+}
+
+@font-face {
+    font-family: 'zabars';
+    src:  url('El Pollo Loco/fonts/zabars.ttf') format('truetype');
+    }  
+
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 32px;
+ }
+
+h1 {
+    font-size: 80px;
+    letter-spacing: 6px;
+    text-shadow: 2px 2px 0px #E68956, 4px 4px 0px rgba(0,0,0,0.25);
+}
+
+@media screen and (max-width: 720px) {
+    canvas {
+        width: 100%
+    }
+}
+
+@media screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
 }

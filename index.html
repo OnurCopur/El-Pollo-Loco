@@ -5,24 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css">
+    <script src="/El Pollo Loco/models/drawable-object.class.js"></script>
     <script src="/El Pollo Loco/models/movable-object.class.js"></script>
     <script src="/El Pollo Loco/models/character.class.js"></script>
     <script src="/El Pollo Loco/models/chicken.class.js"></script>
+    <script src="/El Pollo Loco/models/chicken-small.class.js"></script>
+    <script src="/El Pollo Loco/models/coin.class.js"></script>
     <script src="/El Pollo Loco/models/cloud.class.js"></script>
+    <script src="/El Pollo Loco/models/status-bar.class.js"></script>
+    <script src="/El Pollo Loco/models/status-bar-bottle.class.js"></script>
+    <script src="/El Pollo Loco/models/status-bar-coin.class.js"></script>
     <script src="/El Pollo Loco/models/world.class.js"></script>
     <script src="/El Pollo Loco/models/background-object.class.js"></script>
     <script src="/El Pollo Loco/models/keyboard.class.js"></script>
     <script src="/El Pollo Loco/models/level.class.js"></script>
     <script src="/El Pollo Loco/models/endboss.class.js"></script>
+    <script src="/El Pollo Loco/models/throwable-object.class.js"></script>
     <script src="/El Pollo Loco/levels/level1.js"></script>
     <script src="/El Pollo Loco/js/game.js"></script>
 </head>
 <body onload="init()">
-    
-    <h1>El Pollo Loco</h1>
+    <div class="main">
+        <h1>El Pollo Loco</h1>
+        <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
 
-    <canvas id="canvas" width="720" height="480"></canvas>
-
+    <div>
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+    </div>
 </body>
 </html>
 

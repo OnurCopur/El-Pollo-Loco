@@ -55,3 +55,12 @@ window.addEventListener('keyup', (e) => {
         keyboard.SPACE = false;
     }
 });
+
+
+function redirectToPrivacyPolice() {
+    window.open("/html/privacyPolice.html", "_blank");
+}
+
+function redirectToLegalNotice() {
+    window.open("html/legalNotice.html", "_blank");
+}

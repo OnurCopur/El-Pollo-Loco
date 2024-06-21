@@ -8,8 +8,11 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
-    //coins = new Coin();
+    coins = [];
     throwableObjects = [];
+    bottles = [];
+    coin_sound = new Audio('El Pollo Loco/audio/coin.mp3');
+    bottle_sound = new Audio('El Pollo Loco/audio/bottle.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -37,8 +40,12 @@ class World {
 
     checkThrowObjects() {
         if(this.keyboard.SPACE) {
-            let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
-            this.throwableObjects.push(bottle);
+            if (this.bottles.length > 0) {
+                let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+                this.bottles.pop(); // Remove a bottle from the collected bottles
+                this.updateBottleBar(); // Update the bottle bar
+            }
         }
     }
 
@@ -52,14 +59,40 @@ class World {
         });
 
 
-
-         /*// Check collision with coins
-         this.level.coins.forEach((coin, index) => {
-            if (this.character.isColliding(coin)) {
-                this.level.coins.splice(index, 1); // Remove the coin from the array
-                this.coinBar.increase(); // Update the coin bar
+        // Check collision with coins
+        this.level.coins.forEach((coin, index) => {
+        if (this.character.isColliding(coin)) {
+            this.coin_sound.play();
+            this.level.coins.splice(index, 1); // Remove the coin from the array
+            this.coins.push(coin); // Add the coin to the collected coins array
+            this.updateCoinBar(); // Update the coin bar
             }
-        });*/
+        });
+
+
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                this.bottle_sound.play();
+                this.level.bottles.splice(index, 1); // Remove the coin from the array
+                this.bottles.push(bottle); // Add the coin to the collected coins array
+                this.updateBottleBar(); // Update the coin bar
+                }
+            });
+    }
+
+    updateCoinBar() {
+        const totalCoins = this.level.coins.length + this.coins.length;
+        const collectedCoins = this.coins.length;
+        const percentage = (collectedCoins / totalCoins) * 100;
+        this.coinBar.setPercentage(percentage);
+    }
+
+
+    updateBottleBar() {
+        const totalBottles = this.level.bottles.length + this.bottles.length;
+        const collectedBottles = this.bottles.length;
+        const percentage = (collectedBottles / totalBottles) * 100;
+        this.bottleBar.setPercentage(percentage);
     }
 
     
@@ -79,16 +112,13 @@ class World {
         this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
 
-
-        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
-
+        this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
 
-
         this.ctx.translate(-this.camera_x, 0);
-
 
         //draw() wird immer wieder aufgerufen
         let self = this;

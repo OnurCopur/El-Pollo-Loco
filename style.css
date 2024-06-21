@@ -13,8 +13,8 @@ body {
 
 canvas {
     background-color: black;
-    margin-top: 50px;
     display: block;
+    border-radius: 24px;
 }
 
 @font-face {
@@ -27,7 +27,6 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 32px;
  }
 
 h1 {
@@ -46,4 +45,47 @@ h1 {
     canvas {
         height: 100vh;
     }
+}
+
+.links {
+    font-size: 24px;
+    padding-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    padding-right: 48px;
+    color: black;
+    cursor: pointer;
+}
+
+.ln-pp-main {
+    flex-direction: column;
+    font-family: Helvetica;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 64px;
+}
+
+.link-ln {
+    color: white;
+}
+
+.privacy-policy {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Helvetica;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    padding: 100px 200px;
 }

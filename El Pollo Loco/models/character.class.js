@@ -42,6 +42,8 @@ class Character extends MovableObject{
 
     world;
     walking_sound = new Audio('El Pollo Loco/audio/running.mp3');
+    jump_sound = new Audio('El Pollo Loco/audio/jump.mp3');
+
 
     constructor() {
         super().loadImage('El Pollo Loco/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -69,6 +71,7 @@ class Character extends MovableObject{
 
             if(this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                this.jump_sound.play();
             }
 
             this.world.camera_x = -this.x + 100;

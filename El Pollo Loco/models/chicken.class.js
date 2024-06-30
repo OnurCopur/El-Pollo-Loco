@@ -50,6 +50,10 @@ class Chicken extends MovableObject {
     }, 500); // Entfernen Sie das Huhn nach 1 Sekunde
   }
 
+  isDead(){
+    return this.dead;
+  }
+
   removeFromWorld() {
     if (this.world && this.world.level) {
       const index = this.world.level.enemies.indexOf(this);

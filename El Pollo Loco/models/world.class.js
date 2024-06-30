@@ -1,5 +1,6 @@
 class World {
   character = new Character();
+  endboss = new Endboss();
   level = level1;
   canvas;
   ctx;
@@ -8,13 +9,14 @@ class World {
   statusBar = new StatusBar();
   coinBar = new CoinBar();
   bottleBar = new BottleBar();
+  endbossHealthBar = new EndbossHealthBar();
+  endbossStatusBarVisible = false;
   coins = [];
   throwableObjects = [];
   bottles = [];
   initialBottleCount = this.level.bottles.length;
-  coin_sound = new Audio("El Pollo Loco/audio/coin.mp3");
-  bottle_sound = new Audio("El Pollo Loco/audio/bottle.mp3");
-  throw_sound = new Audio("El Pollo Loco/audio/throw.mp3");
+
+
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -24,11 +26,17 @@ class World {
     this.setWorld();
     this.run();
     this.initializeEnemies(); // Initialize the enemies (including chickens)
+    this.endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // Assuming Endboss is part of level enemies
   }
+
+
+
 
   setWorld() {
     this.character.world = this;
   }
+
+
 
   initializeEnemies() {
     this.level.enemies.forEach((enemy) => {
@@ -36,17 +44,26 @@ class World {
     });
   }
 
+  checkEndbossVisibility() {
+    const distance = this.endboss.x - this.character.x;
+    if (distance <= 500 && !this.endbossStatusBarVisible) {
+      this.endbossStatusBarVisible = true;
+      endboss_sound.play();
+    }
+  }
+
   run() {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-    }, 200);
+      this.checkEndbossVisibility(); // Check Endboss visibility every interval
+    }, 50);
   }
 
   checkThrowObjects() {
     if (this.keyboard.SPACE) {
       if (this.bottles.length > 0) {
-        this.throw_sound.play();
+        throw_sound.play();
         let bottle = new ThrowableObject(
           this.character.x + 50,
           this.character.y + 100
@@ -60,21 +77,31 @@ class World {
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-        if (this.character.isAboveGround()) {
-          enemy.die(); // Character springt von oben auf das Huhn
+      if (
+        !enemy.isDead() &&
+        this.character.isColliding(enemy) &&
+        !this.character.isHurt()
+      ) {
+        if (this.character.collisionFromAbove(enemy)) {
+          chicken_dead_sound.play();
+          enemy.die();
         } else {
-          this.character.hit(); // Character kollidiert seitlich mit dem Huhn
+          if (enemy instanceof Endboss) {
+            this.character.hit(20); // Reduce 20 health if collided with Endboss
+          } else if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+            this.character.hit(10); // Reduce 10 health if collided with Chicken or SmallChicken
+          } else {
+            this.character.hit(5); // Default hit value
+          }
           this.statusBar.setPercentage(this.character.energy);
         }
       }
     });
-  
 
     // Check collision with coins
     this.level.coins.forEach((coin, index) => {
       if (this.character.isColliding(coin)) {
-        this.coin_sound.play();
+        coin_sound.play();
         this.level.coins.splice(index, 1); // Remove the coin from the array
         this.coins.push(coin); // Add the coin to the collected coins array
         this.updateCoinBar(); // Update the coin bar
@@ -83,13 +110,42 @@ class World {
 
     this.level.bottles.forEach((bottle, index) => {
       if (this.character.isColliding(bottle)) {
-        this.bottle_sound.play();
+        bottle_sound.play();
         this.level.bottles.splice(index, 1); // Remove the coin from the array
         this.bottles.push(bottle); // Add the coin to the collected coins array
         this.updateBottleBar(); // Update the coin bar
       }
     });
-  }
+
+  // Check collision with throwable objects
+  this.throwableObjects.forEach((throwableObject, throwableIndex) => {
+    this.level.enemies.forEach((enemy, enemyIndex) => {
+      if (!enemy.isDead() && throwableObject.isColliding(enemy)) {
+        if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+          bottle_break.play();
+          enemy.die(); // Make the enemy die if it is a Chicken or SmallChicken
+          this.throwableObjects.splice(throwableIndex, 1); // Remove the throwable object from the array
+        }
+      }
+    });
+
+    // Check collision with Endboss
+    if (!this.endboss.isDead() && throwableObject.isColliding(this.endboss)) {
+      bottle_break.play();
+      this.endboss.hit(); // Reduce Endboss health
+      this.throwableObjects.splice(throwableIndex, 1); // Remove the throwable object from the array
+      this.updateEndbossHealthBar(); // Update the Endboss health bar
+    }
+    if (this.endboss.isDead()) {
+      won_sound.play();
+    }
+  });
+}
+
+updateEndbossHealthBar() {
+  const percentage = (this.endboss.health / 100) * 100;
+  this.endbossHealthBar.setPercentage(percentage);
+}
 
   updateCoinBar() {
     const totalCoins = this.level.coins.length + this.coins.length;
@@ -116,6 +172,9 @@ class World {
     this.addToMap(this.statusBar);
     this.addToMap(this.coinBar);
     this.addToMap(this.bottleBar);
+    if (this.endbossStatusBarVisible) {
+      this.addToMap(this.endbossHealthBar); // Add Endboss health bar only when visible
+    }
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.coins);

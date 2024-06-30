@@ -1,79 +1,52 @@
-body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url('El Pollo Loco/img/background.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    font-family: 'zabars', Arial, Helvetica, sans-serif;
-}
-
-canvas {
-    background-color: black;
-    display: block;
-    border-radius: 24px;
-}
-
 @font-face {
-    font-family: 'zabars';
-    src:  url('El Pollo Loco/fonts/zabars.ttf') format('truetype');
-    }  
+    font-family: 'Zabar';
+    src: url('El Pollo Loco/fonts/zabars.ttf');
+}
 
-
-.main {
+body {
     display: flex;
     flex-direction: column;
-    align-items: center;
- }
-
-h1 {
-    font-size: 80px;
-    letter-spacing: 6px;
-    text-shadow: 2px 2px 0px #E68956, 4px 4px 0px rgba(0,0,0,0.25);
-}
-
-@media screen and (max-width: 720px) {
-    canvas {
-        width: 100%
-    }
-}
-
-@media screen and (max-height: 480px) {
-    canvas {
-        height: 100vh;
-    }
-}
-
-.links {
-    font-size: 24px;
-    padding-top: 100px;
-    display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('El Pollo Loco/img/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family:'Zabar', 'Raleway', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
-a {
-    text-decoration: none;
-    padding-right: 48px;
-    color: black;
-    cursor: pointer;
+body::backdrop {
+    background-image: url('El Pollo Loco/img/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.ln-pp-main {
-    flex-direction: column;
-    font-family: Helvetica;
+.impressum {
     color: white;
-    font-size: 24px;
     display: flex;
-    text-align: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    margin-top: 64px;
+    height: 100vh;
+    margin: 0;
+    background-image: url('El Pollo Loco/img/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
 }
 
-.link-ln {
+.impressum a {
+    text-decoration: none;
     color: white;
 }
 
@@ -83,9 +56,476 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: Helvetica;
+    height: 100%;
+    margin: 0;
+    background-image: url('El Pollo Loco/img/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: sans-serif;
     font-optical-sizing: auto;
     font-weight: 100;
     font-style: normal;
     padding: 100px 200px;
+}
+
+.privacy-policy a {
+    text-decoration: none;
+    color: white;
+}
+
+canvas {
+    background-color: black;
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 300px;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /*margin-top: 1000px;/*
+    z-index: 2;  /*WIEDER LÖSCHEN DANACH*/
+}
+
+h1 {
+    color: black;
+    font-size: 64px;
+    letter-spacing: 4px;
+}
+
+.start-screen-container {
+    height: 100vh;
+    margin: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-screen {
+    background-image: url('El Pollo Loco/img/9_intro_outro_screens/start/startscreen_1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 500px;
+    width: 800px;
+    z-index: 2;
+    margin-bottom: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 16px;
+    padding: 4px 0 8px 0;
+    box-sizing: border-box;
+}
+
+.start-button {
+    background-color: rgba(255, 150, 0);
+    font-weight: bold;
+    width: 200px;
+    height: 48px;
+    font-size: 32px;
+    border: none;
+    border-radius: 16px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    margin-block-start: -530px;
+    z-index: 999;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/*.start-button:after {
+    content: '';
+    position: absolute;
+    border: 1px solid #000000;
+    bottom: 4px;
+    left: 4px;
+    width: calc(100% - 1px);
+    height: calc(100% - 1px);
+}*/
+
+.start-button:hover:after {
+    bottom: 2px;
+    left: 2px;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.legal-container {
+    position: absolute;
+    display: flex;
+    bottom: 28px;
+    gap: 32px;
+}
+
+.legal-container a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.legal-container a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.game-over-screen-container {
+    height: 100vh;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-over-screen {
+    background-image: url('El Pollo Loco/img/9_intro_outro_screens/game_over/game over.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 482px;
+    width: 722px;
+    z-index: 0;
+    margin-bottom: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border-radius: 16px;
+}
+
+.buttons {
+    height: 48px;
+    width: 720px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.button {
+    background-color: rgba(255, 150, 0);
+    margin-right: 10px;
+    border: none;
+    color: black;
+    padding: 18px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.mute {
+    background-image: url('El Pollo Loco/img/other/volume-xmark-solid.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+
+}
+
+.unmute {
+    background-image: url('./img/10_buttons/volume-high-solid.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+.start {
+    background-image: url('El Pollo Loco/img/other/play-solid.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px;
+}
+
+.fullscreen {
+    background-image: url('El Pollo Loco/img/other/expand-solid.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+}
+
+.joystick {
+    background-image: url('El Pollo Loco/img/other/joystick.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28px;
+}
+
+.instructions {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.d-none {
+    display: none;
+}
+
+.instructions-text {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.instructions img {
+    height: 40px;
+}
+
+.space-key-img {
+    height: 48px !important;
+    width: 60px;
+}
+
+.mobile-button {
+    height: 48px;
+    width: 48px;
+    margin-right: 10px;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #9f2233d7;
+}
+
+.mobile-left {
+    background-image: url('img/10_buttons/left-arrow.png');
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mobile-right {
+    background-image: url('img/10_buttons/right-arrow.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30px;
+}
+
+.mobile-up {
+    background-image: url('img/10_buttons/up-arrow.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+}
+
+.mobile-throw {
+    background-image: url('img/10_buttons/molotov-cocktail.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 36px;
+}
+
+.orientation-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: grey;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.orientation-alert p {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.orientation-alert img {
+    width: 60%;
+}
+
+.mobileBtns {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+    margin-left: 8px;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .game-over-screen {
+        width: 100%;
+        height: 100%;
+        background-size: 120%;
+        overflow-x: hidden;
+    }
+
+    .start-screen-container {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .start-screen {
+        width: 100%;
+        background-size: 120%;
+        margin-top: -80px; 
+        overflow-x: hidden;
+    }
+
+    .start-button {
+        margin-top: -350px;
+        padding: 5px 15px;
+    }
+
+    .buttons {
+        margin-top: 50px;
+        margin-bottom: 160px;
+    }
+
+    .instructions {
+        font-size: 16px;
+        margin-bottom: 50px;
+    }
+
+    .instructions-buttons-left {
+        margin-left: 8px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .fullscreen {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+   .orientation-alert {
+       display: flex;
+   }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        margin: 0;
+        width: 100vw;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .buttons {
+        margin-top: 0;
+    }
+
+    .game-over-screen-container {
+        height: 100vh;
+        margin: 0;
+        position: absolute;
+        width: 100%;
+        display: block;
+    }
+
+    .game-over-screen {
+        width: 100%;
+        height: 100%;
+        background-size: 120%;
+        overflow-x: hidden;
+    }
+
+    .start-screen-container {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+    }
+
+    .start-screen {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        background-size: 100%;
+        margin: 0;
+    }
+
+    .instructions {
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+
+    .instructions-buttons-left {
+        margin-left: 8px;
+    }
+
+    .fullscreen {
+        display: none;
+    }
+
+    .start-button {
+        margin-top: -350px;
+    }
+
+    .instructions-text {
+        display: none;
+    }
+
+    .instructions-mobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+ .canvas-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+.game-buttons {
+    display: flex;
+    margin-top: -280px;
+    cursor: pointer;
+}
+
+.d-none {
+    display: none;
+}
+
+/* Responsive adjustments if needed */
+@media only screen and (max-width: 720px) {
+    .game-buttons {
+        align-items: center;
+        cursor: pointer;
+    }
 }

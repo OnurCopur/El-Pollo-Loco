@@ -12,10 +12,8 @@ class Coin extends MovableObject {
 
   IMAGES_COIN = ["El Pollo Loco/img/8_coin/coin_1.png"];
 
-  constructor(world) {
-    super();
-    this.world = world;
-    this.loadImages(this.IMAGES_COIN);
+  constructor() {
+    super().loadImages(this.IMAGES_COIN);
     this.x = 300 + Math.random() * 1500;
     this.y = 100 + Math.random() * 200;
 

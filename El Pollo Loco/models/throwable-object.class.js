@@ -28,6 +28,7 @@ class ThrowableObject extends MovableObject {
     this.throw();
   }
 
+
   throw() {
     this.speedY = 25;
     this.applyGravity();
@@ -38,6 +39,7 @@ class ThrowableObject extends MovableObject {
       // Check if the bottle has hit the ground
       if (this.y >= 300) {
         this.playSplashAnimation();
+        bottle_break.play();
         clearInterval(this.throwInterval); // Stop the bottle's horizontal movement
       }
     }, 25);

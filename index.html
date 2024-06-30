@@ -17,6 +17,7 @@
     <script src="/El Pollo Loco/models/status-bar.class.js"></script>
     <script src="/El Pollo Loco/models/status-bar-bottle.class.js"></script>
     <script src="/El Pollo Loco/models/status-bar-coin.class.js"></script>
+    <script src="/El Pollo Loco/models/status-bar-endboss.class.js"></script>
     <script src="/El Pollo Loco/models/world.class.js"></script>
     <script src="/El Pollo Loco/models/background-object.class.js"></script>
     <script src="/El Pollo Loco/models/keyboard.class.js"></script>
@@ -27,15 +28,76 @@
     <script src="/El Pollo Loco/js/game.js"></script>
 </head>
 <body onload="init()">
-    <div class="main">
-        <h1>El Pollo Loco</h1>
-        <canvas id="canvas" width="720" height="480"></canvas>
+    
+    <h1>El Pollo Loco</h1>
+
+    <div id="orientation-alert" class="orientation-alert">
+        <img src="El Pollo Loco/img/other/rotate-solid.svg" alt="Please rotate your device">
+        <p>Please rotate your device</p>
     </div>
 
-    <div class="links">
-        <a onclick="redirectToLegalNotice()">Impressum</a>
-        <a onclick="redirectToPrivacyPolice()">Datenschutz</a>
+    <div id="start-screen-container" class="start-screen-container">
+
+        <div id="start-screen" class="start-screen">
+            <div class="header">
+                <div id="buttons" class="buttons">
+                    <button id="mute" onclick="toggleMuted()" class="button mute"></button>
+                    <button id="fullscreen" onclick="fullscreen()" class="button fullscreen"></button>
+                    <button id="showControls" onclick="showControls()" class="button joystick"></button>
+                </div>
+                <div>
+                    <button id="start-button" class="start-button" onclick="startGame()" >Start Game</button>
+                </div>
+            </div>
+
+            <div id="legal-container" class="legal-container">
+                <a href="html\legalNotice.html" target="_blank">Impressum</a>
+                <a href="html\privacyPolice.html" target="_blank">Datenschutz</a>
+            </div>
+
+            <div id="instructions" class="instructions d-none">
+                <div class="instructions-text">
+                    <img src="El Pollo Loco\img\other\left_arrow.png">
+                    <img src="El Pollo Loco\img\other\right_arrow.png">
+                    <span>Move</span>
+                </div>
+                <div class="instructions-text">
+                    <img src="El Pollo Loco\img\other\up_arrow.png">
+                    <span>Jump</span>
+                </div>
+                <div class="instructions-text">
+                    <img class="space-key-img" src="El Pollo Loco\img\other\space.png">
+                    <span>Throw bottle</span>
+                </div>
+                <div class="instructions-mobile d-none" id="instructions-mobile">
+                    <div class="instructions-buttons-left">
+                        <button class="mobile-left mobile-button" id="mobile-left"></button>
+                        <button class="mobile-right mobile-button" id="mobile-right"></button>
+                    </div>
+                    <div class="instructions-buttons-right">
+                        <button class="mobile-up mobile-button" id="mobile-up"></button>
+                        <button class="mobile-throw mobile-button" id="mobile-throw"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
+
+    <!--<div id="game-over-screen-container" class="game-over-screen-container">
+        <div id="game-over-screen" class="game-over-screen"></div>
+    </div>-->
+
+    
+    <div class="canvas-control">
+        <canvas class="canvas" id="canvas" width="720px" height="480px"></canvas>
+        <div id="game-buttons" class="game-buttons d-none">
+            <button id="mute-game" onclick="toggleMuted()" class="button mute"></button>
+            <button id="fullscreen" onclick="fullscreen()" class="button fullscreen"></button>
+            <button id="showControls" onclick="showControls()" class="button joystick"></button>
+        </div>
+    </div>
+
 </body>
 </html>
 

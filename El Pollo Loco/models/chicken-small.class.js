@@ -3,6 +3,7 @@ class SmallChicken extends MovableObject {
   height = 60;
   width = 80;
 
+
   IMAGES_WALKING2 = [
     "El Pollo Loco/img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "El Pollo Loco/img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
@@ -12,6 +13,14 @@ class SmallChicken extends MovableObject {
   IMAGES_DEAD_CHICKEN_SMALL = [
     "El Pollo Loco/img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
   ];
+
+ 
+  offset = {
+    top: 5,
+    bottom: 5,
+    left: 5,
+    right: 5,
+  }
 
   constructor() {
     super().loadImage(
@@ -28,16 +37,21 @@ class SmallChicken extends MovableObject {
 
   animate() {
     setInterval(() => {
-      this.moveLeft();
-      this.otherDirection = false;
+      if (!this.dead) {
+
+        this.moveLeft();
+        this.otherDirection = false;
+      }
     }, 1000 / 60);
 
     setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING2);
+      if (!this.dead)
+        this.playAnimation(this.IMAGES_WALKING2);
     }, 200);
 
     setInterval(() => {
-      this.jump();
+      if (!this.dead)
+        this.jump();
     }, 1000);
   }
 
@@ -67,7 +81,11 @@ class SmallChicken extends MovableObject {
     setTimeout(() => {
       this.y = 390; // Position auf dem Boden setzen
       this.removeFromWorld();
-    }, 500); // Entferne das Huhn nach 0.5 Sekunden
+    }, 1000); // Entferne das Huhn nach 0.5 Sekunden
+  }
+
+  isDead(){
+    return this.dead;
   }
 
   removeFromWorld() {

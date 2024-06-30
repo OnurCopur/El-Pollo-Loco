@@ -3,7 +3,6 @@ class Character extends MovableObject {
   height = 300;
   speed = 10;
 
-
   IMAGES_IDLE = [
     "El Pollo Loco/img/2_character_pepe/1_idle/idle/I-1.png",
     "El Pollo Loco/img/2_character_pepe/1_idle/idle/I-2.png",
@@ -68,17 +67,16 @@ class Character extends MovableObject {
   ];
 
   world;
-  walking_sound = new Audio("El Pollo Loco/audio/running.mp3");
-  jump_sound = new Audio("El Pollo Loco/audio/jump.mp3");
+ 
   lastActionTime = new Date().getTime();
+  deadAnimationPlayed = false;
 
   offset = {
     top: 120,
-    bottom: 0,
+    bottom: 15,
     left: 20,
     right: 20,
   };
-
 
   constructor() {
     super().loadImage("El Pollo Loco/img/2_character_pepe/1_idle/idle/I-1.png");
@@ -93,40 +91,46 @@ class Character extends MovableObject {
   }
 
 
+
   animate() {
     setInterval(() => {
-      let currentTime = new Date().getTime();
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight();
-        this.otherDirection = false;
-        this.walking_sound.play();
-        this.lastActionTime = currentTime;
+      if (!this.isDead()) { // Check if character is not dead
+        let currentTime = new Date().getTime();
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+          this.moveRight();
+          this.otherDirection = false;
+          walking_sound.play();
+          this.lastActionTime = currentTime;
+        }
+        if (this.world.keyboard.LEFT && this.x > -619) {
+          this.moveLeft();
+          this.otherDirection = true;
+          walking_sound.play();
+          this.lastActionTime = currentTime;
+        }
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
+          this.jump();
+          jump_sound.play();
+          this.lastActionTime = currentTime;
+        }
+        this.world.camera_x = -this.x + 100;
       }
-
-      if (this.world.keyboard.LEFT && this.x > -619) {
-        this.moveLeft();
-        this.otherDirection = true;
-        this.walking_sound.play();
-        this.lastActionTime = currentTime;
-      }
-
-      if (this.world.keyboard.UP && !this.isAboveGround()) {
-        this.jump();
-        this.jump_sound.play();
-        this.lastActionTime = currentTime;
-      }
-
-      this.world.camera_x = -this.x + 100;
-    }, 1000 / 60);
+    }, 1000 / 40);
 
     setInterval(() => {
       let currentTime = new Date().getTime();
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
+        hurt_sound.play();
       } else if (this.isDead()) {
-        this.playAnimation(this.IMAGES_DEAD);
+        if (!this.deadAnimationPlayed) { // Play dead animation only once
+          this.playAnimation(this.IMAGES_DEAD);
+          this.deadAnimationPlayed = true;
+          background_sound.pause();
+          gameover_sound.play();
+        }
       } else if (this.isAboveGround()) {
-        this.playAnimation(this.IMAGES_JUMPING);
+        this.playAnimation(this.IMAGES_JUMPING); // Play jumping animation
       } else {
         let idleTime = currentTime - this.lastActionTime;
         if (idleTime >= 6000) {
@@ -142,8 +146,9 @@ class Character extends MovableObject {
     }, 200);
   }
 
-  
   jump() {
-    this.speedY = 25;
+    if (!this.isDead()) { // Prevent jumping if character is dead
+      this.speedY = 25;
+    }
   }
 }

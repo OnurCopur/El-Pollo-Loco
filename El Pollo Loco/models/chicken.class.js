@@ -12,35 +12,38 @@ class Chicken extends MovableObject {
   IMAGES_DEAD_CHICKEN = [
     "El Pollo Loco/img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
   ];
-
   dead = false;
 
-  constructor(world) {
+  constructor() {
     super().loadImage(
       "El Pollo Loco/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
     );
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_DEAD_CHICKEN);
-    this.world = world; // Set the world property
-
     this.x = 300 + Math.random() * 1500;
     this.speed = 0.15 + Math.random() * 0.25; // Chicken laufen unterschiedlich schnell
     this.animate();
   }
 
+
   animate() {
-    setInterval(() => {
+    const chickenInterval = setInterval(() => {
       if (!this.dead) {
         this.moveLeft();
       }
+      pushInterval(chickenInterval);
+
     }, 1000 / 60);
 
-    setInterval(() => {
+    const chickenInterval2 = setInterval(() => {
       if (!this.dead) {
         this.playAnimation(this.IMAGES_WALKING);
       }
+      pushInterval(chickenInterval2);
     }, 200);
+  
   }
+
 
   die() {
     this.dead = true;
@@ -50,10 +53,12 @@ class Chicken extends MovableObject {
     }, 500); // Entfernen Sie das Huhn nach 1 Sekunde
   }
 
+
   isDead(){
     return this.dead;
   }
 
+  
   removeFromWorld() {
     if (this.world && this.world.level) {
       const index = this.world.level.enemies.indexOf(this);

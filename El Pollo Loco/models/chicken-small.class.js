@@ -35,42 +35,55 @@ class SmallChicken extends MovableObject {
     this.animate();
   }
 
-  animate() {
-    setInterval(() => {
-      if (!this.dead) {
 
+  animate() {
+    const smallChickenInterval = setInterval(() => {
+      if (!this.dead) {
         this.moveLeft();
         this.otherDirection = false;
       }
+      pushInterval(smallChickenInterval);
     }, 1000 / 60);
 
-    setInterval(() => {
-      if (!this.dead)
-        this.playAnimation(this.IMAGES_WALKING2);
+    const smallChickenInterval2 = setInterval(() => {
+      if (!this.dead) {
+        this.playAnimation(this.IMAGES_WALKING2); 
+      }
+      pushInterval(smallChickenInterval2);
     }, 200);
 
-    setInterval(() => {
-      if (!this.dead)
+    const smallChickenInterval3 = setInterval(() => {
+      if (!this.dead) {
         this.jump();
+      }
+  
+      pushInterval(smallChickenInterval3);
     }, 1000);
+  
   }
 
+
   applyGravity() {
-    setInterval(() => {
+    const smallChickenInterval4 = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
+      pushInterval(smallChickenInterval4);
+
     }, 1000 / 30);
   }
+
 
   isAboveGround() {
     return this.y < 360;
   }
 
+
   jump() {
     this.speedY = 20;
   }
+
 
   die() {
     this.dead = true;
@@ -84,10 +97,12 @@ class SmallChicken extends MovableObject {
     }, 1000); // Entferne das Huhn nach 0.5 Sekunden
   }
 
+
   isDead(){
     return this.dead;
   }
 
+  
   removeFromWorld() {
     if (this.world && this.world.level) {
       const index = this.world.level.enemies.indexOf(this);

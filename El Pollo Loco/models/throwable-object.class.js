@@ -45,6 +45,7 @@ class ThrowableObject extends MovableObject {
     }, 25);
   }
 
+  
   animateThrow() {
     this.throwAnimationInterval = setInterval(() => {
       this.playAnimation(this.IMAGES_BOTTLES);

@@ -37,7 +37,6 @@
     </div>
 
     <div id="start-screen-container" class="start-screen-container">
-
         <div id="start-screen" class="start-screen">
             <div class="header">
                 <div id="buttons" class="buttons">
@@ -46,7 +45,7 @@
                     <button id="showControls" onclick="showControls()" class="button joystick"></button>
                 </div>
                 <div>
-                    <button id="start-button" class="start-button" onclick="startGame()" >Start Game</button>
+                    <button id="start-button" class="start-button" onclick="startGame()">Start Game</button>
                 </div>
             </div>
 
@@ -80,23 +79,30 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!--<div id="game-over-screen-container" class="game-over-screen-container">
-        <div id="game-over-screen" class="game-over-screen"></div>
-    </div>-->
+    <div id="game-over-screen-container" class="game-over-screen-container">
+        <div id="game-over-screen" class="game-over-screen">
+            <button class="winLoseBtn" onclick="window.location.href = 'index.html';">Menu</button>
+            <button class="winLoseBtn" onclick="startGame()">Restart</button>
+        </div>
+        <div id="win-screen" class="win-screen">
+            <button class="winLoseBtn" onclick="window.location.href = 'index.html';">Menu</button>
+            <button class="winLoseBtn" onclick="startGame()">Restart</button>
+        </div>
+    </div>
 
-    
-    <div class="canvas-control">
+    <canvas class="canvas" id="canvas" width="720px" height="480px"></canvas>
+
+    <!---<div class="canvas-control">
         <canvas class="canvas" id="canvas" width="720px" height="480px"></canvas>
         <div id="game-buttons" class="game-buttons d-none">
-            <button id="mute-game" onclick="toggleMuted()" class="button mute"></button>
+            <button id="mute" onclick="toggleMuted()" class="button mute"></button>
             <button id="fullscreen" onclick="fullscreen()" class="button fullscreen"></button>
             <button id="showControls" onclick="showControls()" class="button joystick"></button>
         </div>
-    </div>
+    </div>--->
 
 </body>
 </html>

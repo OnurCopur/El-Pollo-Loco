@@ -13,14 +13,17 @@ class DrawableObject {
     bottom: 5,
   };
 
+
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
   }
 
+
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
+
 
   drawFrame(ctx) {
     if (
@@ -39,6 +42,7 @@ class DrawableObject {
     }
   }
 
+
   /**
    *
    * @param {Array} arr  - ['img/image1.png', 'img/image2.png', ...]
@@ -52,6 +56,7 @@ class DrawableObject {
     });
   }
 
+  
   drawOffsetFrame(ctx, mo) {
     if (
       this instanceof Character ||

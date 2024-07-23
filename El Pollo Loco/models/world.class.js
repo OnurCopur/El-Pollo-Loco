@@ -16,8 +16,6 @@ class World {
   bottles = [];
   initialBottleCount = this.level.bottles.length;
 
-
-
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -29,13 +27,10 @@ class World {
     this.endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // Assuming Endboss is part of level enemies
   }
 
-
-
-
+  
   setWorld() {
     this.character.world = this;
   }
-
 
 
   initializeEnemies() {
@@ -43,6 +38,7 @@ class World {
       enemy.world = this; // Set the world property for each enemy
     });
   }
+
 
   checkEndbossVisibility() {
     const distance = this.endboss.x - this.character.x;
@@ -52,16 +48,19 @@ class World {
     }
   }
 
+
   run() {
-    setInterval(() => {
+    let intervals = setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
       this.checkEndbossVisibility(); // Check Endboss visibility every interval
     }, 50);
+    pushInterval(intervals);
   }
 
+
   checkThrowObjects() {
-    if (this.keyboard.SPACE) {
+    if (this.keyboard.D) {
       if (this.bottles.length > 0) {
         throw_sound.play();
         let bottle = new ThrowableObject(
@@ -74,6 +73,7 @@ class World {
       }
     }
   }
+
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
@@ -88,15 +88,20 @@ class World {
         } else {
           if (enemy instanceof Endboss) {
             this.character.hit(20); // Reduce 20 health if collided with Endboss
-          } else if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+            if (this.character.energy == 0) {
+              endboss_sound.pause();
+            }
+          } else if (
+            enemy instanceof Chicken ||
+            enemy instanceof SmallChicken
+          ) {
             this.character.hit(10); // Reduce 10 health if collided with Chicken or SmallChicken
-          } else {
-            this.character.hit(5); // Default hit value
           }
           this.statusBar.setPercentage(this.character.energy);
         }
       }
     });
+
 
     // Check collision with coins
     this.level.coins.forEach((coin, index) => {
@@ -117,35 +122,37 @@ class World {
       }
     });
 
-  // Check collision with throwable objects
-  this.throwableObjects.forEach((throwableObject, throwableIndex) => {
-    this.level.enemies.forEach((enemy, enemyIndex) => {
-      if (!enemy.isDead() && throwableObject.isColliding(enemy)) {
-        if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
-          bottle_break.play();
-          enemy.die(); // Make the enemy die if it is a Chicken or SmallChicken
-          this.throwableObjects.splice(throwableIndex, 1); // Remove the throwable object from the array
+    // Check collision with throwable objects
+    this.throwableObjects.forEach((throwableObject, throwableIndex) => {
+      this.level.enemies.forEach((enemy, enemyIndex) => {
+        if (!enemy.isDead() && throwableObject.isColliding(enemy)) {
+          if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+            bottle_break.play();
+            enemy.die(); // Make the enemy die if it is a Chicken or SmallChicken
+            this.throwableObjects.splice(throwableIndex, 1); // Remove the throwable object from the array
+          }
         }
+      });
+
+      // Check collision with Endboss
+      if (!this.endboss.isDead() && throwableObject.isColliding(this.endboss)) {
+        bottle_break.play();
+        this.endboss.hit(); // Reduce Endboss health
+        this.throwableObjects.splice(throwableIndex, 1); // Remove the throwable object from the array
+        this.updateEndbossHealthBar(); // Update the Endboss health bar
+      }
+      if (this.endboss.isDead()) {
+        won_sound.play();
       }
     });
+  }
 
-    // Check collision with Endboss
-    if (!this.endboss.isDead() && throwableObject.isColliding(this.endboss)) {
-      bottle_break.play();
-      this.endboss.hit(); // Reduce Endboss health
-      this.throwableObjects.splice(throwableIndex, 1); // Remove the throwable object from the array
-      this.updateEndbossHealthBar(); // Update the Endboss health bar
-    }
-    if (this.endboss.isDead()) {
-      won_sound.play();
-    }
-  });
-}
 
-updateEndbossHealthBar() {
-  const percentage = (this.endboss.health / 100) * 100;
-  this.endbossHealthBar.setPercentage(percentage);
-}
+  updateEndbossHealthBar() {
+    const percentage = (this.endboss.health / 100) * 100;
+    this.endbossHealthBar.setPercentage(percentage);
+  }
+
 
   updateCoinBar() {
     const totalCoins = this.level.coins.length + this.coins.length;
@@ -154,11 +161,13 @@ updateEndbossHealthBar() {
     this.coinBar.setPercentage(percentage);
   }
 
+
   updateBottleBar() {
     const collectedBottles = this.bottles.length;
     const percentage = (collectedBottles / this.initialBottleCount) * 100;
     this.bottleBar.setPercentage(percentage);
   }
+
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -192,11 +201,13 @@ updateEndbossHealthBar() {
     });
   }
 
+
   addObjectsToMap(objects) {
     objects.forEach((o) => {
       this.addToMap(o);
     });
   }
+
 
   addToMap(mo) {
     if (mo.otherDirection) {
@@ -211,12 +222,14 @@ updateEndbossHealthBar() {
     }
   }
 
+
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0); // Verschiebung um die Breite des Bildes
     this.ctx.scale(-1, 1); //Spiegelung um 180 Grad
     mo.x = mo.x * -1;
   }
+
 
   flipImageBack(mo) {
     mo.x = mo.x * -1;

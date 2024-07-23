@@ -5,8 +5,6 @@ class Endboss extends MovableObject {
   speed = 1.5;
   health = 100;
   deadAnimationPlayed = false;
-  //endboss_sound = new Audio('El Pollo Loco/audio/endboss_music.mp3');
-  //won_sound = new Audio('El Pollo Loco/audio/game_won_sound.mp3'); // Add won_sound
 
   offset = {
     top: 90,
@@ -68,12 +66,15 @@ class Endboss extends MovableObject {
 
   }
 
+  
   animate() {
-    setInterval(() => {
+    const endbossInterval = setInterval(() => {
       if (this.isDead() && !this.deadAnimationPlayed) {
         this.playAnimationOnce(this.IMAGES_DEAD);
         this.deadAnimationPlayed = true;
         endboss_sound.pause();
+        stopAllIntervals();
+        document.getElementById('win-screen').classList.remove('d-none');
       } else if (!this.isDead()) {
         if (this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
@@ -81,21 +82,25 @@ class Endboss extends MovableObject {
           this.playAnimation(this.IMAGES_WALKING);
         }
       }
+      pushInterval(endbossInterval);
+
     }, 200);
 
-    setInterval(() => {
+    const endbossDeadIntervall = setInterval(() => {
       if (!this.isDead() && this.world && this.world.endbossStatusBarVisible) {
           background_sound.pause();
           this.moveLeft();
           this.otherDirection = false;
       }
+      pushInterval(endbossDeadIntervall)
     }, 1000 / 60);
   }
 
  
-  isHurt() {
+  /*isHurt() {
     return this.health < 100 && this.health > 0;
-  }
+  }*/
+
 
   hit() {
     this.health -= 20;
@@ -104,9 +109,11 @@ class Endboss extends MovableObject {
     }
   }
 
+
   isDead() {
     return this.health == 0;
   }
+
 
   isVisibleInCanvas() {
     const distance = this.world.character.x - this.x;

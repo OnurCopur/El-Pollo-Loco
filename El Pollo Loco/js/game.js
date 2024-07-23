@@ -1,12 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-
 let isMuted = false;
-
-
-
-
+let intervalIds = [];
 
 
 const coin_sound = new Audio("El Pollo Loco/audio/coin.mp3");
@@ -29,16 +25,39 @@ const allSounds = [
     hurt_sound, gameover_sound, background_sound
 ];
 
+
 function init() {
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard)
+    document.getElementById('game-over-screen').classList.add('d-none');
+    document.getElementById('win-screen').classList.add('d-none');
 }
+
+
+/**
+ * Adds the provided interval to the collection of interval IDs.
+ *
+ * @param {type} interval - The interval ID to be added.
+ */
+function pushInterval(interval) {
+    intervalIds.push(interval);
+  }
+  
+  /**
+   * Stops all intervals by clearing their IDs.
+   *
+   * @param {array} intervalIds - An array of interval IDs to be stopped
+   * @return {undefined}
+   */
+  function stopAllIntervals() {
+    intervalIds.forEach((id) => clearInterval(id));
+  }
+
 
 function toggleMuted() {
     isMuted = !isMuted;
     allSounds.forEach(sound => sound.muted = isMuted);
     updateMuteButton();
 }
+
 
 function updateMuteButton() {
     const muteButton = document.getElementById('mute');
@@ -49,17 +68,29 @@ function updateMuteButton() {
     }
 }
 
-function startGame() {
+
+function startGame() { 
+    initLevel();
+    init();
+    canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    console.log('Game started. My character is', world['character']);
-    document.getElementById('start-screen').classList.add('d-none');
-    document.getElementById('game-buttons').classList.remove('d-none');
+    document.getElementById('start-screen').classList.add('d-none');;
     background_sound.play();
+    background_sound.currentTime = 0;
+    won_sound.pause();
 }
+
+
+function hideGameOverScreen() {
+    let gameOverScreen = document.getElementById("game-over-screen");
+    gameOverScreen.style.display = "none";
+    showMobileBtns();
+  }
 
 function showControls() {
     document.getElementById('instructions').classList.toggle('d-none');
 }
+
 
 function fullscreen() {
     if (!document.fullscreenElement) {
@@ -87,11 +118,13 @@ function fullscreen() {
     }
 }
 
+
 function hideGameOverScreen() {
     let gameOverScreen = document.getElementById("game-over-screen");
     gameOverScreen.style.display = "none";
     showMobileBtns();
 }
+
 
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 39) {
@@ -119,6 +152,7 @@ window.addEventListener('keydown', (e) => {
       }
 });
 
+
 window.addEventListener('keyup', (e) => {
     if (e.keyCode == 39) {
         keyboard.RIGHT = false;
@@ -145,9 +179,11 @@ window.addEventListener('keyup', (e) => {
       }
 });
 
+
 function redirectToPrivacyPolice() {
     window.open("/html/privacyPolice.html", "_blank");
 }
+
 
 function redirectToLegalNotice() {
     window.open("html/legalNotice.html", "_blank");

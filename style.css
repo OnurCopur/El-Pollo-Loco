@@ -78,12 +78,10 @@ canvas {
     background-color: black;
     max-width: 100%;
     max-height: 100%;
-    margin-bottom: 300px;
+    margin-bottom: 280px;
     display: block;
     border-radius: 16px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    /*margin-top: 1000px;/*
-    z-index: 2;  /*WIEDER LÖSCHEN DANACH*/
 }
 
 h1 {
@@ -111,7 +109,7 @@ h1 {
     height: 500px;
     width: 800px;
     z-index: 2;
-    margin-bottom: 170px;
+    margin-bottom: 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,10 +196,26 @@ h1 {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 482px;
-    width: 722px;
+    height: 480px;
+    width: 720px;
     z-index: 0;
-    margin-bottom: 220px;
+    margin-bottom: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border-radius: 16px;
+}
+
+.win-screen {
+    background-image: url('El Pollo Loco/img/9_intro_outro_screens/win/won_2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 480px;
+    width: 720px;
+    z-index: 1;
+    margin-bottom: 130px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -230,6 +244,24 @@ h1 {
     font-size: 16px;
     cursor: pointer;
     border-radius: 50%;
+}
+
+.winLoseBtn {
+    background-color: rgba(255, 150, 0);
+    font-weight: bold;
+    width: 80px;
+    margin-top: 8px;
+    height: 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 16px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .mute {
@@ -376,6 +408,7 @@ h1 {
     canvas {
         width: 100%;
         overflow-x: hidden;
+        margin-top: 1900px;
     }
 
     .game-over-screen {
@@ -392,14 +425,15 @@ h1 {
 
     .start-screen {
         width: 100%;
-        background-size: 120%;
-        margin-top: -80px; 
+        background-size: 100%;
+        margin-top: 15px; 
         overflow-x: hidden;
+        border-radius: 0;
     }
 
     .start-button {
         margin-top: -350px;
-        padding: 5px 15px;
+        padding: 0;
     }
 
     .buttons {
@@ -416,13 +450,48 @@ h1 {
         margin-left: 8px;
     }
 
+    .fullscreen {
+        display: none;
+    }
+
     h1 {
         display: none;
     }
 
-    .fullscreen {
-        display: none;
+    .header {
+        display: flex;
+        align-items: center;
+        flex-direction: unset;
     }
+
+    .buttons {
+        height: 48px;
+        width:auto;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        margin-top: 0;
+    }
+   
+        .game-over-screen {
+        width: 100%;
+        height: 100%;
+        background-size: 120%;
+        overflow-x: hidden;
+        flex-direction: unset;
+        align-items: unset;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .win-screen {
+        flex-direction: unset;
+        align-items: unset; 
+        justify-content: center;
+        gap: 16px;
+    }
+    
 }
 
 @media only screen and (max-width: 520px) {
@@ -461,6 +530,10 @@ h1 {
         height: 100%;
         background-size: 120%;
         overflow-x: hidden;
+        flex-direction: unset;
+        align-items: unset;
+        justify-content: center;
+        gap: 16px;
     }
 
     .start-screen-container {
@@ -516,6 +589,8 @@ h1 {
     display: flex;
     margin-top: -280px;
     cursor: pointer;
+    z-index: 5;
+    padding-top: 16px;
 }
 
 .d-none {
@@ -529,3 +604,10 @@ h1 {
         cursor: pointer;
     }
 }
+
+@media only screen and (max-width: 810px) {
+    .start-screen {
+        background-size: 100% 500px;
+    }
+}
+

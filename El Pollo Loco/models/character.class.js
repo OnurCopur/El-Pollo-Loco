@@ -91,9 +91,8 @@ class Character extends MovableObject {
   }
 
 
-
   animate() {
-    setInterval(() => {
+    const movementIntervalId = setInterval(() => {
       if (!this.isDead()) { // Check if character is not dead
         let currentTime = new Date().getTime();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -117,7 +116,7 @@ class Character extends MovableObject {
       }
     }, 1000 / 40);
 
-    setInterval(() => {
+    const timeIntervalId = setInterval(() => {
       let currentTime = new Date().getTime();
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
@@ -128,6 +127,8 @@ class Character extends MovableObject {
           this.deadAnimationPlayed = true;
           background_sound.pause();
           gameover_sound.play();
+          stopAllIntervals();
+          document.getElementById('game-over-screen').classList.remove('d-none');
         }
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING); // Play jumping animation
@@ -144,8 +145,11 @@ class Character extends MovableObject {
         }
       }
     }, 200);
+        pushInterval(movementIntervalId);
+        pushInterval(timeIntervalId);
   }
 
+  
   jump() {
     if (!this.isDead()) { // Prevent jumping if character is dead
       this.speedY = 25;

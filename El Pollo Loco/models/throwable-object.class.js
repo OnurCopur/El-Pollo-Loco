@@ -15,7 +15,8 @@ class ThrowableObject extends MovableObject {
     "El Pollo Loco/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
 
-  constructor(x, y) {
+  
+  constructor(x, y, direction) {
     super().loadImage(
       "El Pollo Loco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png"
     );
@@ -25,6 +26,7 @@ class ThrowableObject extends MovableObject {
     this.y = y;
     this.width = 60;
     this.height = 70;
+    this.direction = direction;
     this.throw();
   }
 
@@ -35,7 +37,7 @@ class ThrowableObject extends MovableObject {
     this.animateThrow();
 
     this.throwInterval = setInterval(() => {
-      this.x += 10;
+      this.x += this.direction === 'right' ? 10 : -10;
       // Check if the bottle has hit the ground
       if (this.y >= 300) {
         this.playSplashAnimation();

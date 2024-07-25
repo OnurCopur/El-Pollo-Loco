@@ -60,12 +60,14 @@ class World {
 
 
   checkThrowObjects() {
-    if (this.keyboard.D) {
+    if (this.keyboard.SPACE) {
       if (this.bottles.length > 0) {
         throw_sound.play();
+        let direction = this.character.otherDirection ? 'left' : 'right';
         let bottle = new ThrowableObject(
-          this.character.x + 50,
-          this.character.y + 100
+          this.character.x + (direction === 'right' ? 50 : -10),
+          this.character.y + 100,
+          direction
         );
         this.throwableObjects.push(bottle);
         this.bottles.pop(); // Remove a bottle from the collected bottles

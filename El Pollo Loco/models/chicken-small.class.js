@@ -22,6 +22,7 @@ class SmallChicken extends MovableObject {
     right: 5,
   }
 
+  
   constructor() {
     super().loadImage(
       "El Pollo Loco/img/3_enemies_chicken/chicken_small/2_dead/dead.png"

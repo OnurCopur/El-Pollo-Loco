@@ -66,8 +66,8 @@ class Character extends MovableObject {
     "El Pollo Loco/img/2_character_pepe/4_hurt/H-43.png",
   ];
 
+  keyboard;
   world;
- 
   lastActionTime = new Date().getTime();
   deadAnimationPlayed = false;
 

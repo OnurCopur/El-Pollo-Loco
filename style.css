@@ -198,13 +198,12 @@ h1 {
     background-position: center;
     height: 480px;
     width: 720px;
-    z-index: 0;
-    margin-bottom: 130px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: start;
+    align-items: end;
     border-radius: 16px;
+    z-index: 5;
 }
 
 .win-screen {
@@ -214,12 +213,11 @@ h1 {
     background-position: center;
     height: 480px;
     width: 720px;
-    z-index: 1;
-    margin-bottom: 130px;
+    z-index: 5;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: start;
+    align-items: end;
     border-radius: 16px;
 }
 
@@ -251,6 +249,7 @@ h1 {
     font-weight: bold;
     width: 80px;
     margin-top: 8px;
+    margin-right: 8px;
     height: 40px;
     font-size: 20px;
     border: none;
@@ -329,8 +328,8 @@ h1 {
 }
 
 .mobile-button {
-    height: 48px;
-    width: 48px;
+    height: 40px;
+    width: 40px;
     margin-right: 10px;
     border: none;
     color: black;
@@ -341,35 +340,35 @@ h1 {
     font-size: 16px;
     cursor: pointer;
     border-radius: 50%;
-    background-color: #9f2233d7;
+    background-color: rgba(255, 150, 0);
 }
 
 .mobile-left {
-    background-image: url('img/10_buttons/left-arrow.png');
+    background-image: url('El Pollo Loco/img/other/left_arrow.png');
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .mobile-right {
-    background-image: url('img/10_buttons/right-arrow.png');
+    background-image: url('El Pollo Loco/img/other/right_arrow.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 30px;
 }
 
 .mobile-up {
-    background-image: url('img/10_buttons/up-arrow.png');
+    background-image: url('El Pollo Loco/img/other/up_arrow.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 32px;
 }
 
 .mobile-throw {
-    background-image: url('img/10_buttons/molotov-cocktail.png');
+    background-image: url('El Pollo Loco/img/6_salsa_bottle/2_salsa_bottle_on_ground.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 36px;
+    background-size: 40px;
 }
 
 .orientation-alert {
@@ -402,6 +401,28 @@ h1 {
     align-items: center !important;
     width: 100%;
     margin-left: 8px;
+}
+
+@media only screen and (max-height: 950px) {
+    canvas {
+        margin-bottom: 200px;
+    }
+
+    .start-screen {
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .header {
+        display: flex;
+        align-items: center;
+        flex-direction: unset;
+    }
+
+    .buttons {
+        width: unset;
+    }
 }
 
 @media only screen and (max-width: 720px) {
@@ -530,10 +551,9 @@ h1 {
         height: 100%;
         background-size: 120%;
         overflow-x: hidden;
-        flex-direction: unset;
-        align-items: unset;
-        justify-content: center;
-        gap: 16px;
+        flex-direction: column;
+        align-items: end;
+        justify-content: unset;
     }
 
     .start-screen-container {
@@ -575,6 +595,10 @@ h1 {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
+    }
+
+    .win-screen {
         width: 100%;
     }
 }

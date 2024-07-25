@@ -67,8 +67,8 @@ class DrawableObject {
       this instanceof Bottle
     ) {
       ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "red";
+      //ctx.lineWidth = "2";
+      //ctx.strokeStyle = "red";
       ctx.rect(
         this.x + this.offset.left,
         this.y + this.offset.top,

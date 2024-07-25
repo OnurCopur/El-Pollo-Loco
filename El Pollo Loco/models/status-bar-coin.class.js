@@ -10,6 +10,7 @@ class CoinBar extends DrawableObject {
 
   percentage = 0;
 
+
   constructor() {
     super();
     this.loadImages(this.IMAGES_COIN);
@@ -20,6 +21,7 @@ class CoinBar extends DrawableObject {
     this.setPercentage(0);
   }
 
+
   // setPercentage(50)
   setPercentage(percentage) {
     this.percentage = percentage; // 0 ... 5
@@ -27,6 +29,7 @@ class CoinBar extends DrawableObject {
     this.img = this.imageCache[path];
   }
 
+  
   resolveImageIndex() {
     if (this.percentage == 100) {
       return 5;

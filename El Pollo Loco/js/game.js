@@ -3,8 +3,9 @@ let world;
 let keyboard;
 let isMuted = false;
 let intervalIds = [];
-let gameStarted = false;
 
+
+/** @type {HTMLAudioElement} */
 const coin_sound = new Audio("El Pollo Loco/audio/coin.mp3");
 const bottle_sound = new Audio("El Pollo Loco/audio/bottle.mp3");
 const throw_sound = new Audio("El Pollo Loco/audio/throw.mp3");
@@ -19,6 +20,11 @@ const hurt_sound = new Audio("El Pollo Loco/audio/hurt.mp3");
 const gameover_sound = new Audio("El Pollo Loco/audio/game_over.mp3");
 const background_sound = new Audio("El Pollo Loco/audio/background_music.mp3");
 
+
+/**
+ * An array containing all the sound elements used in the game.
+ * @type {HTMLAudioElement[]}
+ */
 const allSounds = [
   coin_sound,
   bottle_sound,
@@ -35,20 +41,22 @@ const allSounds = [
 ];
 
 
+/**
+ * Initializes the game by setting up the keyboard and hiding screens.
+ */
 function init() {
   document.getElementById("game-over-screen").classList.add("d-none");
   document.getElementById("win-screen").classList.add("d-none");
   keyboard = new Keyboard();
-  keyboard.bindKeyPressEvents(); // Ensuring key press events are bound
+  keyboard.bindKeyPressEvents();
   keyboard.bindBtsPressEvents();
-  //showMobileBtns();
 }
 
 
 /**
  * Adds the provided interval to the collection of interval IDs.
  *
- * @param {type} interval - The interval ID to be added.
+ * @param {number} interval - The interval ID to be added.
  */
 function pushInterval(interval) {
   intervalIds.push(interval);
@@ -57,15 +65,15 @@ function pushInterval(interval) {
 
 /**
  * Stops all intervals by clearing their IDs.
- *
- * @param {array} intervalIds - An array of interval IDs to be stopped
- * @return {undefined}
  */
 function stopAllIntervals() {
   intervalIds.forEach((id) => clearInterval(id));
 }
 
 
+/**
+ * Toggles the mute state of the game sounds.
+ */
 function toggleMuted() {
   isMuted = !isMuted;
   allSounds.forEach((sound) => (sound.muted = isMuted));
@@ -73,6 +81,9 @@ function toggleMuted() {
 }
 
 
+/**
+ * Updates the mute button appearance based on the mute state.
+ */
 function updateMuteButton() {
   const muteButton = document.getElementById("mute");
   if (isMuted) {
@@ -83,6 +94,9 @@ function updateMuteButton() {
 }
 
 
+/**
+ * Starts the game by initializing the level and game world.
+ */
 function startGame() {
   hideStartButton();
   initLevel();
@@ -95,11 +109,12 @@ function startGame() {
   won_sound.pause();
   removeInstructions();
   showMobileBtns();
-  gameStarted = true;
-  switchToFullscreen('canvas');
 }
 
 
+/**
+ * Hides the start button and start screen background.
+ */
 function hideStartButton() {
   let startbutton = document.getElementById("start-button");
   let startScreen = document.getElementById("start-screen");
@@ -108,98 +123,131 @@ function hideStartButton() {
 }
 
 
+/**
+ * Removes instructions based on the device type.
+ */
 function removeInstructions() {
   if (!checkIfMobileDevice()) {
     document.getElementById("instructions").style.display = "none";
   } else {
     if (window.innerHeight > 480) {
-    document.getElementById("instructions-mobile").style.width = "90%";
+      document.getElementById("instructions-mobile").style.width = "90%";
     }
   }
 }
 
 
-function fullscreen() {
-  if (gameStarted) {
-    switchToFullscreen('canvas');
-  } else {
-    switchToFullscreen('start-screen');
+/**
+ * Enters fullscreen mode.
+ */
+function enterFullscreen() {
+  if (document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen();
+  } else if (document.documentElement.mozRequestFullScreen) {
+    document.documentElement.mozRequestFullScreen();
+  } else if (document.documentElement.webkitRequestFullscreen) {
+    document.documentElement.webkitRequestFullscreen();
+  } else if (document.documentElement.msRequestFullscreen) {
+    document.documentElement.msRequestFullscreen();
+  }
+  adjustMargins(true);
+}
+
+
+/**
+ * Exits fullscreen mode.
+ */
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+  adjustMargins(false);
+}
+
+
+/**
+ * Adjusts the margins of game over and win screens based on fullscreen mode.
+ *
+ * @param {boolean} isFullscreen - Whether the screen is in fullscreen mode.
+ */
+function adjustMargins(isFullscreen) {
+  const marginValue = isFullscreen ? '130px' : '50px';
+
+  const gameOverScreen = document.getElementById('game-over-screen');
+  const winScreen = document.getElementById('win-screen');
+
+  if (gameOverScreen) {
+    gameOverScreen.style.marginBottom = marginValue;
+  }
+  if (winScreen) {
+    winScreen.style.marginBottom = marginValue;
   }
 }
 
-function switchToFullscreen(elementId) {
-  if (document.fullscreenElement) {
-    document.exitFullscreen().then(() => {
-      // Nachdem der Vollbildmodus beendet wurde, wieder in den Vollbildmodus mit dem neuen Element wechseln
-      let fullscreenElement = document.getElementById(elementId);
-      enterFullscreen(fullscreenElement);
-    });
-  } else {
-    // Wenn kein Vollbildmodus aktiv ist, direkt das neue Element in den Vollbildmodus versetzen
-    let fullscreenElement = document.getElementById(elementId);
-    enterFullscreen(fullscreenElement);
-  }
-}
 
-function enterFullscreen(element) {
+/**
+ * Toggles fullscreen mode on and off.
+ */
+function toggleFullscreen() {
   if (!document.fullscreenElement) {
-    // Enter fullscreen
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      // Firefox
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      // Chrome, Safari, and Opera
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      // IE/Edge
-      element.msRequestFullscreen();
-    }
+    enterFullscreen();
   } else {
-    // Exit fullscreen
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      // Firefox
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      // Chrome, Safari, and Opera
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      // IE/Edge
-      document.msExitFullscreen();
-    }
+    exitFullscreen();
   }
 }
 
 
+// Event listeners for fullscreen changes
+document.addEventListener('fullscreenchange', () => adjustMargins(!!document.fullscreenElement));
+document.addEventListener('mozfullscreenchange', () => adjustMargins(!!document.mozFullScreenElement));
+document.addEventListener('webkitfullscreenchange', () => adjustMargins(!!document.webkitFullscreenElement));
+document.addEventListener('msfullscreenchange', () => adjustMargins(!!document.msFullscreenElement));
+
+
+// Initial call to adjust margins if already in fullscreen mode
+adjustMargins(!!document.fullscreenElement || !!document.mozFullScreenElement || !!document.webkitFullscreenElement || !!document.msFullscreenElement);
+
+
+/**
+ * Checks if the device is a mobile device.
+ *
+ * @returns {boolean} True if the device is mobile, otherwise false.
+ */
 function checkIfMobileDevice() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isMobileDevice =
-      /android|webos|iphone|ipad|ipod|blackberry|windows phone|iemobile|opera mini|tablet/.test(
-        userAgent
-      );
-    return isMobileDevice;
-  }
-  
-  
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|windows phone|iemobile|opera mini|tablet/.test(userAgent);
+  return isMobileDevice;
+}
+
+
+/**
+ * Shows or hides mobile buttons based on the device type.
+ */
 function showMobileBtns() {
-    let instrMobile = document.getElementById("instructions-mobile");
+  let instrMobile = document.getElementById("instructions-mobile");
 
-    if (checkIfMobileDevice()) {
-      instrMobile.classList.remove("d-none");
-      instrMobile.classList.add("mobileBtns");
-      document.getElementById('legal-container').classList.add('d-none');
-      hideInstructions();
-    } else {
-      instrMobile.classList.add("d-none");
-      instrMobile.classList.remove("mobileBtns");
-      showInstructions();
-    }
+  if (checkIfMobileDevice()) {
+    instrMobile.classList.remove("d-none");
+    instrMobile.classList.add("mobileBtns");
+    document.getElementById('legal-container').classList.add('d-none');
+    hideInstructions();
+  } else {
+    instrMobile.classList.add("d-none");
+    instrMobile.classList.remove("mobileBtns");
+    showInstructions();
   }
-  
+}
 
+
+/**
+ * Hides instructions for desktop devices.
+ */
 function hideInstructions() {
   let elements = document.querySelectorAll(".instructions-text");
   elements.forEach((element) => {
@@ -208,6 +256,9 @@ function hideInstructions() {
 }
 
 
+/**
+ * Shows instructions for desktop devices.
+ */
 function showInstructions() {
   let elements = document.querySelectorAll(".instructions-text");
   elements.forEach((element) => {
@@ -216,14 +267,20 @@ function showInstructions() {
 }
 
 
+window.addEventListener("resize", checkIfMobileDevice);
 
 
-
+/**
+ * Redirects to the privacy policy page.
+ */
 function redirectToPrivacyPolice() {
   window.open("/html/privacyPolice.html", "_blank");
 }
 
 
+/**
+ * Redirects to the legal notice page.
+ */
 function redirectToLegalNotice() {
   window.open("html/legalNotice.html", "_blank");
 }

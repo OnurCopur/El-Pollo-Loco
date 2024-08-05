@@ -92,6 +92,7 @@ h1 {
 
 .start-screen-container {
     height: 100vh;
+    width: 100%;
     margin: 0;
     position: absolute;
     z-index: 1;
@@ -192,7 +193,7 @@ h1 {
 }
 
 .game-over-screen {
-    background-image: url('El Pollo Loco/img/9_intro_outro_screens/game_over/game over.png');
+    background-image: url('El Pollo Loco/img/9_intro_outro_screens/game_over/game over!.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -204,11 +205,12 @@ h1 {
     align-items: end;
     border-radius: 16px;
     z-index: 5;
+    gap: 8px;
 }
 
 .win-screen {
-    background-image: url('El Pollo Loco/img/9_intro_outro_screens/win/won_2.png');
-    background-size: cover;
+    background-image: url('El Pollo Loco/img/9_intro_outro_screens/win/won_1.png');
+    background-size: 90%;
     background-repeat: no-repeat;
     background-position: center;
     height: 480px;
@@ -244,23 +246,42 @@ h1 {
     border-radius: 50%;
 }
 
-.winLoseBtn {
+.winLoseBtnHome {
     background-color: rgba(255, 150, 0);
-    font-weight: bold;
-    width: 80px;
-    margin-top: 8px;
-    margin-right: 8px;
-    height: 40px;
-    font-size: 20px;
+    background-image: url('El Pollo Loco/img/other/home.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+    margin-right: 10px;
+    margin-top: 10px;
     border: none;
-    border-radius: 16px;
     color: black;
+    padding: 18px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    font-size: 16px;
     cursor: pointer;
-    z-index: 999;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 50%;
+}
+
+.winLoseBtnRestart {
+    background-color: rgba(255, 150, 0);
+    background-image: url('El Pollo Loco/img/other/restart.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+    color: black;
+    padding: 18px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 .mute {
@@ -306,6 +327,7 @@ h1 {
     align-items: center;
     font-size: 34px;
     font-weight: bold;
+    /*margin-bottom: 10px;*/
 }
 
 .d-none {
@@ -418,6 +440,7 @@ h1 {
         display: flex;
         align-items: center;
         flex-direction: unset;
+        margin-top: 10px;
     }
 
     .buttons {
@@ -425,19 +448,25 @@ h1 {
     }
 }
 
+/*@media only screen and (max-width: 950px) {
+    .header {
+        margin-top: 20px;
+    }
+}*/
+
 @media only screen and (max-width: 720px) {
     canvas {
-        width: 100%;
+        width: 95%;
         overflow-x: hidden;
-        margin-top: 1900px;
+        margin-top: 180px;
     }
 
-    .game-over-screen {
+    /*.game-over-screen {
         width: 100%;
         height: 100%;
         background-size: 120%;
         overflow-x: hidden;
-    }
+    }*/
 
     .start-screen-container {
         width: 100vw;
@@ -464,7 +493,7 @@ h1 {
 
     .instructions {
         font-size: 16px;
-        margin-bottom: 50px;
+        /*margin-bottom: 50px;*/
     }
 
     .instructions-buttons-left {
@@ -492,30 +521,44 @@ h1 {
         display: flex;
         align-items: end;
         justify-content: center;
-        margin-top: 0;
+        margin-top: 20px;
     }
    
-        .game-over-screen {
-        width: 100%;
-        height: 100%;
-        background-size: 120%;
-        overflow-x: hidden;
-        flex-direction: unset;
-        align-items: unset;
-        justify-content: center;
-        gap: 16px;
-    }
+   
+    
 
     .win-screen {
-        flex-direction: unset;
-        align-items: unset; 
-        justify-content: center;
-        gap: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        border-radius: 16px;
+        width: 90%;
+    }
+
+    .game-over-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        border-radius: 16px;
+        width: 95%;
+        margin-bottom: 20px;
     }
     
 }
 
-@media only screen and (max-width: 520px) {
+@media only screen and (max-width: 670px) {
+.header {
+    margin-top: 30px;
+}
+}
+
+@media only screen and (max-width: 670px) and (min-height: 450px) {
+    .header {
+        margin-top: 40px;
+    }
+    }
+
+@media only screen and (max-width: 660px) {
    .orientation-alert {
        display: flex;
    }
@@ -600,6 +643,8 @@ h1 {
 
     .win-screen {
         width: 100%;
+        height: 100%;
+        background-size: 70%;
     }
 }
 
@@ -627,11 +672,70 @@ h1 {
         align-items: center;
         cursor: pointer;
     }
+
 }
 
-@media only screen and (max-width: 810px) {
+@media only screen and (max-width: 810px) and (min-height: 600px) {
     .start-screen {
         background-size: 100% 500px;
+        width: 98%;
+    }
+    
+    /*canvas {
+        width: 93%;
+    }*/
+}
+
+@media only screen and (max-width: 770px) and (min-height: 820px) {
+    .instructions {
+        margin-bottom: 20px
+    }
+}
+
+@media only screen and (max-width: 711px) and (min-height: 820px) {
+    .instructions {
+        margin-bottom: 30px
+    }
+}
+
+@media only screen and (max-width: 680px) and (min-height: 820px) {
+    .instructions {
+        margin-bottom: 40px
+    }
+}
+
+
+@media only screen and (max-width: 760px) {
+    .winLoseBtnHome {
+        margin-top: 25px;
+        margin-right: 25px;
+    }
+
+    .winLoseBtnRestart {
+        margin-right: 25px;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .winLoseBtnHome {
+        margin-top: 40px;
+        margin-right: 10px;
+    }
+
+    .winLoseBtnRestart {
+        margin-right: 10px;
+    }
+}
+
+
+@media only screen and (max-width: 710px) {
+    .winLoseBtnHome {
+        margin-top: 50px;
+        margin-right: 10px;
+    }
+
+    .winLoseBtnRestart {
+        margin-right: 10px;
     }
 }
 

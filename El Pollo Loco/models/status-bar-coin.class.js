@@ -1,4 +1,12 @@
+/**
+ * Represents a status bar that displays the amount of coins collected.
+ * Inherits from `DrawableObject` and provides functionality to update and display the coin count.
+ */
 class CoinBar extends DrawableObject {
+  /**
+   * An array of image paths representing different states of the coin status bar.
+   * @type {string[]}
+   */
   IMAGES_COIN = [
     "El Pollo Loco/img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png",
     "El Pollo Loco/img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png",
@@ -8,9 +16,16 @@ class CoinBar extends DrawableObject {
     "El Pollo Loco/img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png",
   ];
 
+  /**
+   * The current percentage of coins displayed on the status bar.
+   * @type {number}
+   */
   percentage = 0;
 
-
+  /**
+   * Constructs a new `CoinBar` instance and initializes its properties.
+   * Loads the images for the coin status bar and sets its initial position and size.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES_COIN);
@@ -21,15 +36,21 @@ class CoinBar extends DrawableObject {
     this.setPercentage(0);
   }
 
-
-  // setPercentage(50)
+  /**
+   * Sets the percentage of coins displayed on the status bar.
+   * Updates the displayed image based on the percentage.
+   * @param {number} percentage - The percentage of coins to be displayed (0 to 100).
+   */
   setPercentage(percentage) {
-    this.percentage = percentage; // 0 ... 5
+    this.percentage = percentage; // 0 ... 100
     let path = this.IMAGES_COIN[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
-  
+  /**
+   * Resolves the index of the image to be used based on the current percentage.
+   * @returns {number} The index of the image in the `IMAGES_COIN` array.
+   */
   resolveImageIndex() {
     if (this.percentage == 100) {
       return 5;
